@@ -3,21 +3,27 @@ float blockSize=0;
 void setup(){
 size(500,500);
 blockSize=min(width/world.length,height/world[0].length);
-world[5][5]=1;
+noStroke();
 }
 float res=3600;
 void draw(){
-background(255);
+  fill(255,255,255,10);
+rect(0,0,width,height);
   for(int i=0;i<res;i++){
+    if(RayHit(new PVector(mouseX,mouseY),PVector.fromAngle(radians(i*(360/res))))){
     PVector Ray=RayPos(new PVector(mouseX,mouseY),PVector.fromAngle(radians(i*(360/res))));
 
 fill(255,0,0);
 ellipse(int(Ray.x),int(Ray.y),10,10);
+//line(Ray.x,Ray.y,mouseX,mouseY);
+    }
 }
 println(frameRate);
 }
 
-
+void mouseReleased(){
+world[int(mouseX/blockSize)][int(mouseY/blockSize)]=1;
+}
 
 boolean isInWorld(int x,int y){
 return (x>=0&&y>=0&&x<world.length&&y<world[0].length);
